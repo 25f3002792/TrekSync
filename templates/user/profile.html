@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<h2><i class="fas fa-user-edit me-2" style="color: var(--secondary);"></i>Edit Profile</h2>
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card card-hover">
+            <div class="card-body">
+                <form method="POST" action="">
+                    {{ form.hidden_tag() }}
+                    <div class="mb-2">
+                        {{ form.email.label(class="form-label") }}
+                        {{ form.email(class="form-control") }}
+                        {% if form.email.errors %}<div class="text-danger">{% for e in form.email.errors %}<small>{{ e }}</small>{% endfor %}</div>{% endif %}
+                    </div>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-save me-2"></i>Update</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

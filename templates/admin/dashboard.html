@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="mb-4"><i class="fas fa-tachometer-alt me-2" style="color: var(--secondary);"></i>Admin Dashboard</h1>
+<div class="row g-4">
+    <div class="col-md-3">
+        <div class="stat-card blue card-hover">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <div class="stat-icon"><i class="fas fa-hiking"></i></div>
+                    <div class="stat-number">{{ total_treks }}</div>
+                </div>
+                <div class="text-end"><small>Total Treks</small></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card green card-hover">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <div class="stat-icon"><i class="fas fa-users"></i></div>
+                    <div class="stat-number">{{ total_users }}</div>
+                </div>
+                <div class="text-end"><small>Total Users</small></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card orange card-hover">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <div class="stat-icon"><i class="fas fa-user-tie"></i></div>
+                    <div class="stat-number">{{ total_staff }}</div>
+                </div>
+                <div class="text-end"><small>Total Staff</small></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card pink card-hover">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <div class="stat-icon"><i class="fas fa-calendar-check"></i></div>
+                    <div class="stat-number">{{ total_bookings }}</div>
+                </div>
+                <div class="text-end"><small>Total Bookings</small></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-6">
+        <div class="card card-hover">
+            <div class="card-header"><i class="fas fa-bolt me-2"></i>Quick Actions</div>
+            <div class="card-body">
+                <a href="{{ url_for('admin.manage_treks') }}" class="btn btn-primary me-2"><i class="fas fa-plus-circle"></i> New Trek</a>
+                <a href="{{ url_for('admin.manage_staff') }}" class="btn btn-secondary me-2"><i class="fas fa-user-check"></i> Approve Staff</a>
+                <a href="{{ url_for('admin.assign_staff') }}" class="btn btn-warning me-2"><i class="fas fa-user-plus"></i> Assign</a>
+                <a href="{{ url_for('admin.view_bookings') }}" class="btn btn-info"><i class="fas fa-list"></i> Bookings</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card card-hover">
+            <div class="card-header"><i class="fas fa-search me-2"></i>Search</div>
+            <div class="card-body">
+                <form action="{{ url_for('admin.search') }}" method="GET" class="d-flex">
+                    <input type="text" name="q" class="form-control me-2" placeholder="Name or ID...">
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<h2><i class="fas fa-calendar-check me-2" style="color: var(--secondary);"></i>All Bookings</h2>
+<div class="card card-hover">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr><th>ID</th><th>User</th><th>Trek</th><th>Status</th><th>Date</th></tr>
+                </thead>
+                <tbody>
+                    {% for booking in bookings %}
+                    <tr>
+                        <td>{{ booking.id }}</td>
+                        <td>{{ booking.user.username }}</td>
+                        <td>{{ booking.trek.name }}</td>
+                        <td>
+                            {% if booking.status == 'Booked' %}<span class="badge bg-success">Booked</span>
+                            {% elif booking.status == 'Cancelled' %}<span class="badge bg-danger">Cancelled</span>
+                            {% else %}<span class="badge bg-info">Completed</span>{% endif %}
+                        </td>
+                        <td>{{ booking.booking_date.strftime('%Y-%m-%d %H:%M') }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

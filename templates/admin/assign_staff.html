@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block content %}
+<h2><i class="fas fa-user-check me-2" style="color: var(--secondary);"></i>Assign Staff to Trek</h2>
+<div class="row">
+    <div class="col-md-6">
+        <div class="card card-hover">
+            <div class="card-header">New Assignment</div>
+            <div class="card-body">
+                <form method="POST" action="">
+                    <div class="mb-3">
+                        <label for="trek_id" class="form-label">Select Trek</label>
+                        <select name="trek_id" class="form-select">
+                            {% for trek in treks %}
+                            <option value="{{ trek.id }}">{{ trek.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="staff_id" class="form-label">Select Staff</label>
+                        <select name="staff_id" class="form-select">
+                            {% for staff in staff_members %}
+                            <option value="{{ staff.id }}">{{ staff.username }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-user-plus me-2"></i>Assign</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card card-hover">
+            <div class="card-header">Current Assignments</div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead><tr><th>Trek</th><th>Staff</th><th>Action</th></tr></thead>
+                        <tbody>
+                            {% for assignment in assignments %}
+                            <tr>
+                                <td>{{ assignment.trek.name }}</td>
+                                <td>{{ assignment.staff.user.username }}</td>
+                                <td>
+                                    <form action="{{ url_for('admin.remove_staff_assignment', assignment_id=assignment.id) }}" method="POST">
+                                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Remove this assignment?')"><i class="fas fa-times"></i> Remove</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

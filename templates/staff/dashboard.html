@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<h1><i class="fas fa-user-tie me-2" style="color: var(--secondary);"></i>Staff Dashboard</h1>
+{% if trek_data %}
+    <div class="row">
+        {% for item in trek_data %}
+        <div class="col-md-4">
+            <div class="card card-hover mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">{{ item.trek.name }}</h5>
+                    <p><i class="fas fa-location-dot me-1"></i>{{ item.trek.location }}</p>
+                    <p><span class="badge bg-{{ 'success' if item.trek.status == 'Open' else 'secondary' }}">{{ item.trek.status }}</span></p>
+                    <p><i class="fas fa-users"></i> Slots: {{ item.trek.available_slots }}</p>
+                    <p><i class="fas fa-user-check"></i> Booked: {{ item.booked_count }}</p>
+                    <a href="{{ url_for('staff.manage_trek', trek_id=item.trek.id) }}" class="btn btn-primary btn-sm"><i class="fas fa-cog"></i> Manage</a>
+                    <a href="{{ url_for('staff.participants', trek_id=item.trek.id) }}" class="btn btn-secondary btn-sm"><i class="fas fa-users"></i> Participants</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="alert alert-info">No treks assigned yet.</div>
+{% endif %}
+{% endblock %}
