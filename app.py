@@ -35,6 +35,11 @@ app.register_blueprint(api_bp)
 def index():
     return redirect(url_for('auth.login'))
 
+@app.errorhandler(404)
+def not_found(e):
+    from flask import request
+    return f"Debug 404: Path='{request.path}', URL='{request.url}'", 404
+
 def init_database():
     with app.app_context():
         db.create_all()
