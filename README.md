@@ -56,8 +56,9 @@ TrekSync/
 ├── models.py           # Database models (User, StaffProfile, Trek, Booking, TrekStaffAssignment)
 ├── forms.py            # WTForms validation classes
 ├── requirements.txt    # Project dependencies
-├── api.py              # REST API blueprint (/api)
+├── api_routes.py       # REST API blueprint (/api)
 ├── api.yaml            # OpenAPI 3.0 specification
+├── vercel.json         # Vercel deployment configuration
 ├── auth.py             # Authentication routes (login, register, logout)
 ├── admin.py            # Admin dashboard and management routes
 ├── staff.py            # Staff dashboard and trek management routes

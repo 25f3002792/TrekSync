@@ -1,6 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
-from datetime import datetime, UTC
+from datetime import datetime, timezone
 
 db = SQLAlchemy()
 
@@ -11,7 +11,7 @@ class User(UserMixin, db.Model):
     password_hash = db.Column(db.String(200), nullable=False)
     role = db.Column(db.String(20), default='user')
     is_blacklisted = db.Column(db.Boolean, default=False)
-    created_at = db.Column(db.DateTime, default=datetime.now(UTC))
+    created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
 
     staff_profile = db.relationship('StaffProfile', backref='user', uselist=False)
     bookings = db.relationship('Booking', backref='user', lazy=True)
@@ -63,7 +63,7 @@ class Booking(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     trek_id = db.Column(db.Integer, db.ForeignKey('trek.id'), nullable=False)
-    booking_date = db.Column(db.DateTime, default=datetime.now(UTC))
+    booking_date = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
     status = db.Column(db.String(20), default='Booked')
 
     __table_args__ = (db.UniqueConstraint('user_id', 'trek_id', name='unique_user_trek_booking'),)
