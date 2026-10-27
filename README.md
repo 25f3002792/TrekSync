@@ -4,6 +4,9 @@ A web application built with Flask for managing trekking expeditions, slot reser
 
 TrekSync provides a centralized platform for adventure travel operators to manage trek itineraries, assign field guides, prevent overbooking with live slot counts, and manage trekker reservations.
 
+- **Live Deployed Application:** [https://trek-sync.vercel.app](https://trek-sync.vercel.app)
+- **Demo Video:** [Google Drive Demo Video](https://drive.google.com/file/d/15LPNWuSysGviQX8Y9JztE-eYzX_bN0a1/view?usp=sharing)
+
 ---
 
 ## Features
