@@ -1,0 +1,146 @@
+openapi: 3.0.0
+info:
+  title: Trekking Management Application API
+  description: RESTful API for managing treks and bookings in the Trekking Management Application
+  version: 1.0.0
+  contact:
+    name: [Your Name]
+    email: [Your Email]
+
+servers:
+  - url: http://127.0.0.1:5000/api
+    description: Local development server
+
+paths:
+  /treks:
+    get:
+      summary: Get all treks
+      description: Returns a list of all treks in the system. No authentication required.
+      operationId: getTreks
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Trek'
+              example:
+                - id: 1
+                  name: "Everest Base Camp"
+                  location: "Nepal"
+                  difficulty: "Hard"
+                  available_slots: 10
+                  status: "Open"
+                - id: 2
+                  name: "Annapurna Circuit"
+                  location: "Nepal"
+                  difficulty: "Moderate"
+                  available_slots: 15
+                  status: "Open"
+
+  /bookings:
+    get:
+      summary: Get bookings
+      description: Returns a list of bookings. Admin sees all bookings; regular users see only their own bookings.
+      operationId: getBookings
+      security:
+        - cookieAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Booking'
+              example:
+                - id: 1
+                  user: "alice_trekker"
+                  trek: "Everest Base Camp"
+                  status: "Booked"
+                  booking_date: "2026-08-10T10:00:00"
+        '401':
+          description: Unauthorized - User must be logged in
+        '403':
+          description: Forbidden
+
+components:
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: session
+      description: Flask-Login session cookie for authentication
+
+  schemas:
+    Trek:
+      type: object
+      required:
+        - id
+        - name
+        - location
+        - difficulty
+        - available_slots
+        - status
+      properties:
+        id:
+          type: integer
+          description: Unique trek identifier
+          example: 1
+        name:
+          type: string
+          description: Name of the trek
+          example: "Everest Base Camp"
+        location:
+          type: string
+          description: Location of the trek
+          example: "Nepal"
+        difficulty:
+          type: string
+          enum: ["Easy", "Moderate", "Hard"]
+          description: Difficulty level of the trek
+          example: "Hard"
+        available_slots:
+          type: integer
+          description: Number of available spots
+          example: 10
+        status:
+          type: string
+          enum: ["Pending", "Open", "Closed", "Completed"]
+          description: Current status of the trek
+          example: "Open"
+
+    Booking:
+      type: object
+      required:
+        - id
+        - user
+        - trek
+        - status
+        - booking_date
+      properties:
+        id:
+          type: integer
+          description: Unique booking identifier
+          example: 1
+        user:
+          type: string
+          description: Username of the trekker
+          example: "alice_trekker"
+        trek:
+          type: string
+          description: Name of the booked trek
+          example: "Everest Base Camp"
+        status:
+          type: string
+          enum: ["Booked", "Cancelled", "Completed"]
+          description: Current status of the booking
+          example: "Booked"
+        booking_date:
+          type: string
+          format: date-time
+          description: Date and time of booking
+          example: "2026-08-10T10:00:00"
